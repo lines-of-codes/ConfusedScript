@@ -4,14 +4,14 @@ from timeit import timeit
 class RequestExit(Exception):
 	pass
 
-print("// StoryScript Shell //")
+print("// ConfusedScript Shell //")
 print("Use \"exit ()\" (Without double quotes) or Press CTRL+C to exit")
 
 printNone = False
 
 try:
 	while True:
-		command = input("StoryScript > ")
+		command = input("ConfusedScript > ")
 		if(command.startswith("xi (")): raise RequestExit
 		if(command.startswith("#df")):
 			scommand = command.split()

@@ -221,11 +221,11 @@ class Lexer:
 
 					valtype = self.parser.ParseTypeFromValue(res)
 					if valtype == Exceptions.InvalidSyntax:
-						return "InvalidValue: Invalid value", Exceptions.InvalidValue
+						return "IV: Invalid value", Exceptions.InvalidValue
 					vartype = self.symbolTable.GetVariableType(tc[0])
 					# Check if Value Type matches Variable type
 					if valtype != vartype:
-						return "InvalidValue: Value doesn't match variable type.", Exceptions.InvalidValue
+						return "IV: Value doesn't match variable type.", Exceptions.InvalidValue
 					res = self.parser.ParseEscapeCharacter(res)
 					if res in allVariableName:
 						res = (self.symbolTable.GetVariable(res))[1]
@@ -255,11 +255,11 @@ class Lexer:
 
 					valtype = self.parser.ParseTypeFromValue(res)
 					if valtype == Exceptions.InvalidSyntax:
-						return "InvalidValue: Invalid value", Exceptions.InvalidValue
+						return "IV: Invalid value", Exceptions.InvalidValue
 
 					# Check if Value Type matches Variable type
 					if valtype != vartype:
-						return "InvalidValue: Value doesn't match variable type.", Exceptions.InvalidValue
+						return "IV: Value doesn't match variable type.", Exceptions.InvalidValue
 					res = self.parser.ParseEscapeCharacter(res)
 					error = self.symbolTable.SetVariable(tc[0], res, vartype)
 					if error: return error[0], error[1]
@@ -287,11 +287,11 @@ class Lexer:
 
 					valtype = self.parser.ParseTypeFromValue(res)
 					if valtype == Exceptions.InvalidSyntax:
-						return "InvalidValue: Invalid value", Exceptions.InvalidValue
+						return "IV: Invalid value", Exceptions.InvalidValue
 
 					# Check if Value Type matches Variable type
 					if valtype != vartype:
-						return "InvalidValue: Value doesn't match variable type.", Exceptions.InvalidValue
+						return "IV: Value doesn't match variable type.", Exceptions.InvalidValue
 					res = self.parser.ParseEscapeCharacter(res)
 					error = self.symbolTable.SetVariable(tc[0], res, vartype)
 					if error: return error[0], error[1]
@@ -319,11 +319,11 @@ class Lexer:
 
 					valtype = self.parser.ParseTypeFromValue(res)
 					if valtype == Exceptions.InvalidSyntax:
-						return "InvalidValue: Invalid value", Exceptions.InvalidValue
+						return "IV: Invalid value", Exceptions.InvalidValue
 
 					# Check if Value Type matches Variable type
 					if valtype != vartype:
-						return "InvalidValue: Value doesn't match variable type.", Exceptions.InvalidValue
+						return "IV: Value doesn't match variable type.", Exceptions.InvalidValue
 					res = self.parser.ParseEscapeCharacter(res)
 					error = self.symbolTable.SetVariable(tc[0], res, vartype)
 					if error: return error[0], error[1]
@@ -351,11 +351,11 @@ class Lexer:
 
 					valtype = self.parser.ParseTypeFromValue(res)
 					if valtype == Exceptions.InvalidSyntax:
-						return "InvalidValue: Invalid value", Exceptions.InvalidValue
+						return "IV: Invalid value", Exceptions.InvalidValue
 
 					# Check if Value Type matches Variable type
 					if valtype != vartype:
-						return "InvalidValue: Value doesn't match variable type.", Exceptions.InvalidValue
+						return "IV: Value doesn't match variable type.", Exceptions.InvalidValue
 					res = self.parser.ParseEscapeCharacter(res)
 					error = self.symbolTable.SetVariable(tc[0], res, vartype)
 					if error: return error[0], error[1]
@@ -376,11 +376,11 @@ class Lexer:
 				try:
 					definedType = self.parser.ParseTypeString(tc[0])
 					if(tc[1] in self.symbolTable.GetAllVariableName()):
-						return f"AlreadyDefined: a Variable {tc[1]} is already defined", Exceptions.AlreadyDefined
+						return f"AD: a Variable {tc[1]} is already defined", Exceptions.AlreadyDefined
 					
 					# Checking for variable naming violation
 					if not (self.parser.CheckNamingViolation(tc[1])):
-						return "InvalidValue: a Variable name cannot start with digits.", Exceptions.InvalidValue
+						return "IV: a Variable name cannot start with digits.", Exceptions.InvalidValue
 
 					# Check If to Keep the Float in the Calculation or not
 					keepFloat = False
@@ -396,12 +396,12 @@ class Lexer:
 						value += i + " "
 					value = value[:-1]
 					vartype = self.parser.ParseTypeFromValue(res)
-					if tc[0] != "var":
+					if tc[0] != "va":
 						# Check If existing variable type matches the New value type
 						if definedType != vartype:
-							return "InvalidValue: Variable types doesn't match value type.", Exceptions.InvalidValue
+							return "IV: Variable types doesn't match value type.", Exceptions.InvalidValue
 					if vartype == Exceptions.InvalidSyntax:
-						return "InvalidSyntax: Invalid value", Exceptions.InvalidSyntax
+						return "IS: Invalid value", Exceptions.InvalidSyntax
 					if value.startswith("new Dynamic ("):
 						msg = value[13:]
 						if value.endswith(')'):
@@ -418,10 +418,10 @@ class Lexer:
 				except IndexError:
 					# var(0) a(1)
 					if tc[0] == "var":
-						return "InvalidSyntax: Initial value needed for var keyword", Exceptions.InvalidSyntax
+						return "IS: Initial value needed for var keyword", Exceptions.InvalidSyntax
 					vartype = self.parser.ParseTypeString(tc[0])
 					if vartype == Exceptions.InvalidSyntax:
-						return "InvalidSyntax: Invalid type", Exceptions.InvalidSyntax
+						return "IS: Invalid type", Exceptions.InvalidSyntax
 					self.symbolTable.SetVariable(tc[1], None, vartype)
 					return None, None
 			elif tc[0] == "pr":
@@ -430,9 +430,9 @@ class Lexer:
 					value += i + " "
 				value = value[:-1]
 				if not value.startswith('('): # Check If the expression has parentheses around or not
-					return "InvalidSyntax: Parenthesis is needed after a function name", Exceptions.InvalidSyntax # Return error if not exists
+					return "IS: Parenthesis is needed after a function name", Exceptions.InvalidSyntax # Return error if not exists
 				if not value.endswith(')'): # Check If the expression has parentheses around or not
-					return "InvalidSyntax: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax # Return error if not exists
+					return "IS: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax # Return error if not exists
 				value = value[1:-1]
 				svalue = value.split()
 				res, error = self.analyseCommand(svalue)
@@ -457,9 +457,9 @@ class Lexer:
 					value += i + " "
 				value = value[:-1]
 				if not value.startswith('('): # Check If the expression has parentheses around or not
-					return "InvalidSyntax: Parenthesis is needed after a function name", Exceptions.InvalidSyntax # Return error if not exists
+					return "IS: Parenthesis is needed after a function name", Exceptions.InvalidSyntax # Return error if not exists
 				if not value.endswith(')'): # Check If the expression has parentheses around or not
-					return "InvalidSyntax: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax # Return error if not exists
+					return "IS: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax # Return error if not exists
 				value = value[1:-1] # Cut parentheses out of the string
 				if value.startswith('"'):
 					value = value[1:]
@@ -526,9 +526,9 @@ class Lexer:
 					value += i + " "
 				value = value[:-1]
 				if not value.startswith('('): # Check If the expression has parentheses around or not
-					return "InvalidSyntax: Parenthesis is needed after a function name", Exceptions.InvalidSyntax # Return error if not exists
+					return "IS: Parenthesis is needed after a function name", Exceptions.InvalidSyntax # Return error if not exists
 				if not value.endswith(')'): # Check If the expression has parentheses around or not
-					return "InvalidSyntax: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax # Return error if not exists
+					return "IS: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax # Return error if not exists
 				value = value[1:-1]
 				valtype = self.parser.ParseTypeFromValue(value)
 				if value.startswith('"'):
@@ -548,25 +548,25 @@ class Lexer:
 								self.symbolTable.enableFunctionFeature = True
 								return None, None
 				except IndexError:
-					return "InvalidValue: You needed to describe what you will change.", Exceptions.InvalidValue
+					return "IV: You needed to describe what you will change.", Exceptions.InvalidValue
 			elif tc[0] == "tr":
 				return self.throwKeyword(tc) # Go to the Throw keyword function
 			elif tc[0] == "to":
 				if tc[1].startswith('('):
 					tc[1] = tc[1][1:]
-				else: return "InvalidSyntax: Parenthesis is needed after a function name", Exceptions.InvalidSyntax
+				else: return "IS: Parenthesis is needed after a function name", Exceptions.InvalidSyntax
 				if tc[multipleCommandsIndex].endswith(')'):
 					tc[multipleCommandsIndex] = tc[multipleCommandsIndex][:-1]
-				else: return "InvalidSyntax: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax
+				else: return "IS: Parenthesis is needed after an Argument input", Exceptions.InvalidSyntax
 				if(tc[1] in allVariableName):
 					return self.symbolTable.GetVariableType(tc[1]), None
 				res, error = self.parser.ParseExpression(tc[1:multipleCommandsIndex + 1])
 				if error: return error[0], error[1]
 				if(not tc[1] in allVariableName and tc[1][0] in ascii_letters):
-					return f"InvalidValue: {tc[1]} is not a Variable and Is not a String.", Exceptions.InvalidValue
+					return f"IV: {tc[1]} is not a Variable and Is not a String.", Exceptions.InvalidValue
 				res = self.parser.ParseTypeFromValue(res)
 				if res == Exceptions.InvalidSyntax:
-					return f"InvalidSyntax: A String must starts with Quote (\") and End with quote (\")", Exceptions.InvalidSyntax
+					return f"IS: A String must starts with Quote (\") and End with quote (\")", Exceptions.InvalidSyntax
 				return res, None
 			elif tc[0] == "dl":
 				if tc[1] in allVariableName:
@@ -576,7 +576,7 @@ class Lexer:
 					self.symbolTable.DeleteFunction(tc[1])
 					return None, None
 				else:
-					return "InvalidValue: The Input is not a variable.", Exceptions.InvalidValue
+					return "IV: The Input is not a variable.", Exceptions.InvalidValue
 			elif tc[0] == "fn":
 				if self.symbolTable.enableFunctionFeature:
 					# func[0] Name[1] (arguments)[2]
@@ -588,7 +588,7 @@ class Lexer:
 
 					if not tc[1] == "ovr":
 						if tc[1] in allFunctionName:
-							return f"AlreadyDefined: The {tc[1]} function is already defined.", Exceptions.AlreadyDefined
+							return f"AD: The {tc[1]} function is already defined.", Exceptions.AlreadyDefined
 					else:
 						# fn[0] ovr[1] Name[2] (arguments)[3]
 						# Find all arguments declared.
@@ -601,7 +601,7 @@ class Lexer:
 							if i.endswith(")"):
 								break
 						if not tc[2] in allFunctionName:
-							return f"NotDefinedException: The {tc[2]} function is not defined. You can't override non-existed function.", Exceptions.NotDefinedException
+							return f"NDE: The {tc[2]} function is not defined. You can't override non-existed function.", Exceptions.NotDefinedException
 						else:
 							self.symbolTable.SetFunction(tc[2], tc[argumentsEndIndex + 1:endIndex], tc[3:argumentsEndIndex - 1])
 							return None, None
@@ -653,7 +653,7 @@ class Lexer:
 						index += 1
 					return None, None
 				except ValueError:
-					return "InvalidValue: Count must be an Integer. (Whole number)", Exceptions.InvalidValue
+					return "IV: Count must be an Integer. (Whole number)", Exceptions.InvalidValue
 			elif tc[0] == "sw":
 				cases = {}
 				case = []
@@ -710,7 +710,7 @@ class Lexer:
 				
 				return res, error
 			else:
-				return "NotImplementedException: This feature is not implemented", Exceptions.NotImplementedException
+				return "NIE: This feature is not implemented", Exceptions.NotImplementedException
 		elif tc[0] in allFunctionName:
 			customSymbolTable = self.symbolTable
 			functionObject = self.symbolTable.GetFunction(tc[0])

@@ -1,13 +1,3 @@
-string a = input ("INPUT: ")
-if a == "I love you" or a == "I do love you" then print ("I love you too") end
-exit (0)
-var a = 10
-var b = 20
-int c = a + b
-c -= 10
-c *= 2
-print (c)
-#define interpet enableFunction true
-func ae () print ("hello world") end
-ae ()
-#define interpet enableFunction false
+va a = in ()
+if a eq "Nice to meet you" then pr ("Nice to meet you too") && xi () end
+if a eq "I hate you" then pr ("Why do you hate me ;-;") && xi () end

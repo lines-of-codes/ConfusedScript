@@ -94,11 +94,10 @@ class Parser:
 		""" Returns If the variable naming valid or not """
 		if not isinstance(name, str):
 			name = str(name)
-		if name in ["if", "else", "var", "int",
-						"bool", "float", "list", "dictionary",
-						"tuple", "const", "override", "func",
-						"end", "print", "input", "throw",
-						"string", "typeof", "del", "namespace"]:
+		if name in ["if", "es", "va", "ovr", "fn",
+						"en", "pr", "in", "tr","to",
+						"dl", "ns", "#df", "lf", "sw",
+						"xi"]:
 			return False
 		elif name[0] in digits:
 			return False
@@ -110,7 +109,7 @@ class Parser:
 		# [OperatorIndex + 1:] = Accessing a Message after the operator
 		operatorIndex = 0
 		for i in expr:
-			if i in [">", "<", "==", "!=", ">=", "<="]:
+			if i in ["mt", "lt", "eq", "ne", "meq", "leq"]:
 				break
 			operatorIndex += 1
 		resl, error = analyseCommandMethod(expr[:operatorIndex]) # Analyse the message on the left
@@ -125,17 +124,17 @@ class Parser:
 		restype = self.ParseTypeFromValue(resr)
 		resr = self.convertToPythonNativeType(restype, resr)
 
-		if expr[operatorIndex] == "==": # If the operator was ==
+		if expr[operatorIndex] == "eq": # If the operator was ==
 			if resl == resr: return True
-		elif expr[operatorIndex] == ">": # If the operator was >
+		elif expr[operatorIndex] == "mt": # If the operator was >
 			if resl > resr: return True
-		elif expr[operatorIndex] == "<": # If the operator was <
+		elif expr[operatorIndex] == "lt": # If the operator was <
 			if resl < resr: return True
-		elif expr[operatorIndex] == "!=": # If the operator was !=
+		elif expr[operatorIndex] == "ne": # If the operator was !=
 			if resl != resr: return True
-		elif expr[operatorIndex] == ">=": # If the operator was >=
+		elif expr[operatorIndex] == "meq": # If the operator was >=
 			if resl >= resr: return True
-		elif expr[operatorIndex] == "<=": # If the operator was <=
+		elif expr[operatorIndex] == "leq": # If the operator was <=
 			if resl <= resr: return True
 		else: return Exceptions.InvalidSyntax
 
@@ -189,34 +188,34 @@ class Parser:
 			if command[1] == "+" or isPlus:
 				res = self.executor.add(command, keepFloat)
 				if res == Exceptions.InvalidSyntax:
-					return None, ("InvalidSyntax: Expected value after + sign\nAt keyword 4", Exceptions.InvalidSyntax)
+					return None, ("IS: Expected value after + sign\nAt keyword 4", Exceptions.InvalidSyntax)
 				return res, None
 			elif command[1] == "-":
 				res = self.executor.subtract(command, keepFloat)
 				if res == Exceptions.InvalidSyntax:
-					return None, ("InvalidSyntax: Expected numbers after - sign\nAt keyword 4", Exceptions.InvalidSyntax)
+					return None, ("IS: Expected numbers after - sign\nAt keyword 4", Exceptions.InvalidSyntax)
 				return res, None
 			elif command[1] == "*":
 				res = self.executor.multiply(command, keepFloat)
 				if res == Exceptions.InvalidSyntax:
-					return None, ("InvalidSyntax: Expected numbers after * sign\nAt keyword 4", Exceptions.InvalidSyntax)
+					return None, ("IS: Expected numbers after * sign\nAt keyword 4", Exceptions.InvalidSyntax)
 				return res, None
 			elif command[1] == "/":
 				res = self.executor.divide(command, keepFloat)
 				if res == Exceptions.InvalidSyntax:
-					return None, ("InvalidSyntax: Expected numbers after / sign\nAt keyword 4", Exceptions.InvalidSyntax)
+					return None, ("IS: Expected numbers after / sign\nAt keyword 4", Exceptions.InvalidSyntax)
 				elif res == Exceptions.DivideByZeroException:
-					return None, ("DivideByZeroException: You can't divide numbers with 0", Exceptions.DivideByZeroException)
+					return None, ("DBZ: You can't divide numbers with 0", Exceptions.DivideByZeroException)
 				return res, None
 			elif command[1] == "**":
 				res = self.executor.pow(command, keepFloat)
 				if res == Exceptions.InvalidSyntax:
-					return None, ("InvalidSyntax: Expected numbers after ** sign\nAt keyword 4", Exceptions.InvalidSyntax)
+					return None, ("IS: Expected numbers after ** sign\nAt keyword 4", Exceptions.InvalidSyntax)
 				return res, None
 			elif command[1] == "%":
 				res = self.executor.modulo(command, keepFloat)
 				if res == Exceptions.InvalidSyntax:
-					return None, ("InvalidSyntax: Expected numbers after \% sign", Exceptions.InvalidSyntax)
+					return None, ("IS: Expected numbers after \% sign", Exceptions.InvalidSyntax)
 				return res, None
 			else:
 				res = ""
@@ -230,4 +229,4 @@ class Parser:
 			try:
 				return command[0], None
 			except IndexError:
-				return None, ("InvalidSyntax: Expected numbers after = sign\nAt keyword 2", Exceptions.InvalidSyntax)
+				return None, ("IS: Expected numbers after = sign\nAt keyword 2", Exceptions.InvalidSyntax)
